@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+    <style>
+  .tab {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #0a0b36;
+    border: 1px solid #ccc;
+    color: #fff;
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+  
+  .tab:hover {
+    transform: scale(1.2);
+  }
+
+.topbar {
+  background-color: #0a0b36;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;           
+  padding: 12px 24px;
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;                     
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.branding h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.branding p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #e0e0e0;                
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 8px;                      
+  color: #ffffff;
+}
+
+.account select {
+  background-color: #1a1b4b;
+  color: #ffffff;
+  border: 1px solid #3a3b6e;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.account select:focus {
+  outline: none;
+  border-color: #5a5be0;
+}
+
+
+.sidebar {
+  width: 240px;
+  background-color: #0d0f48;
+  min-height: 100vh;
+  padding: 1rem 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 0.25rem;
+}
+
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: #c5c7f0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-left: 4px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar a:hover {
+  background-color: #171a60;
+  color: #ffffff;
+}
+
+.sidebar a:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: -3px;
+  background-color: #171a60;
+  color: #ffffff;
+
+}
+.sidebar a[aria-current="page"] {
+  background-color: #1e2278;
+  color: #ffffff;
+  font-weight: 600;
+  border-left-color: #4f46e5;
+}
+
+.nav-icon {
+  font-size: 1.1rem;
+}
+
+.dashboard-container {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #0a0b36;
+}
+
+.dashboard-header p {
+  margin: 4px 0 20px 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.cards-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #ffffff;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card.warning {
+  border-left: 5px solid #ef4444;
+}
+
+.card-icon {
+  font-size: 1.75rem;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-label {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.card-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0a0b36;
+}
+
+.chart-column {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.chart-column h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #0a0b36;
+  text-align: center;
+}
+
+.chart-wrapper {
+  position: relative;
+  max-width: 320px;
+  margin: 0 auto;
+}
+</style>
+</head>
+
+
+
+<body>
+<!-- Topbar -->
+<header class="topbar">
+  <div class="brand-container">
+    <img src="C:\Users\RD\Documents\My Code\for project\catsu_logo-removebg-preview.png" alt="Logo" class="logo-img">
+    <div class="branding">
+      <h1>LibReturn</h1>
+      <p>Catanduanes State University</p>
+    </div>
+  </div>
+
+  <div class="account">
+    <span>Juan Dela Cruz</span>  
+    <select name="profile" id="Profile">
+      <option value="profile">Profile</option>
+      <option value="settings">Settings</option>
+      <option value="edit account">Edit Account</option>
+      <option value="logout">Logout</option>
+    </select>
+  
+  </div>
+</header>
+
+<!-- Main Layout Wrapper -->
+<div class="wrapper">
+  <aside class="sidebar" aria-label="Main Navigation">
+    <nav>
+      <ul>
+        <li>
+          <a href="#dashboard" aria-current="page">
+            <span class="nav-icon" aria-hidden="true">📊</span>
+            <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#my-loans">
+            <span class="nav-icon" aria-hidden="true">📚</span>
+            <span class="nav-text">My Loans & Renewals</span>
+          </a>
+        </li>
+        <li>
+          <a href="#search-catalog">
+            <span class="nav-icon" aria-hidden="true">🔍</span>
+            <span class="nav-text">Search Catalog</span>
+          </a>
+        </li>
+        <li>
+          <a href="#holds-queue">
+            <span class="nav-icon" aria-hidden="true">⏳</span>
+            <span class="nav-text">Holds & Queue</span>
+          </a>
+        </li>
+        <li>
+          <a href="#fines">
+            <span class="nav-icon" aria-hidden="true">💳</span>
+            <span class="nav-text">Fines & History</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+</div>
+
+<!--Dashboard-->
+       <main class="dashboard-container">
+  <header class="dashboard-header">
+    <h2>Student Portal</h2>
+    <p>My Account & Library Overview</p>
+  </header>
+
+  <div class="dashboard-grid">
+    <section class="cards-column">
+      <div class="stat-card">
+        <span class="card-icon" aria-hidden="true">📖</span>
+        <div class="card-info">
+          <span class="card-label">My Active Loans</span>
+          <span class="card-value">2 Books</span>
+        </div>
+      </div>
+
+      <div class="stat-card warning">
+        <span class="card-icon" aria-hidden="true">⚠️</span>
+        <div class="card-info">
+          <span class="card-label">Due Soon / Overdue</span>
+          <span class="card-value">1 Book</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <span class="card-icon" aria-hidden="true">⏳</span>
+        <div class="card-info">
+          <span class="card-label">My Active Holds / Queue</span>
+          <span class="card-value">1 Book</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <span class="card-icon" aria-hidden="true">💳</span>
+        <div class="card-info">
+          <span class="card-label">Unpaid Fines</span>
+          <span class="card-value">₱5.00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-column">
+      <h3>Library Catalog Distribution</h3>
+      <div class="chart-wrapper">
+        <canvas id="libraryChart"></canvas>
+      </div>
+    </section>
+  </div>
+
+ 
+<hr>
+<br>
+<p>Catanduanes State University</p> <p>System Concern</p><h5>libreturn@catsu.edu.ph</h5>
+ <script>
+  const ctx = document.getElementById('libraryChart').getContext('2d');
+  
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Available Books', 'Borrowed Books', 'Reserved / On Queue'],
+      datasets: [{
+        data: [1058, 234, 45], // Hardcoded realistic library catalog values
+        backgroundColor: [
+          '#10b981', // Green for Available
+          '#0a0b36', // Dark Navy for Borrowed
+          '#f59e0b'  // Amber/Orange for Reserved
+        ],
+        borderWidth: 2,
+        borderColor: '#ffffff'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            padding: 16,
+            font: {
+              size: 13
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return ` ${context.label}: ${context.raw} items`;
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+</main>
+
+</body>
