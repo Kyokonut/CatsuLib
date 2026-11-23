@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibReturn - Library Management System</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="loginPage" class="login-page">
+        <div class="login-box">
+            <div class="logo">
+                LR
+            </div>
+            <h1>LibReturn</h1>
+            <p>
+                library Management System
+            </p>
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <label>Email: </label>
+                <input id="email" type="email" value="lira@libreturn.com" required /> 
+
+                <label>Password</label>
+                <input id="password" type="password" value="lira123" required />
+
+                <button class="button" type="submit">Login</button>
+                <p id="loginMessage" class="error"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="appPage" class="app hidden">
+        <aside class="sidebar">
+            <div class="side-logo">
+                <div class="small-logo">LR</div>
+                <div><strong>LibReturn</strong><small>CATSU Library</small></div>
+            </div>
+
+            <input
+                id="searchBox"
+                class="search"
+                type="search"
+                placeholder="Search books"
+            />
+
+            <nav>
+                <button class="nav-button" data-page="dashboard">Dashboard</button>
+                <button class="nav-button" data-page="books">Books</button>
+                <button class="nav-button" data-page="borrow">Borrow Book</button>
+                <button class="nav-button" data-page="returns">Returns</button>
+                <button class="nav-button" data-page="queue">Waiting List</button>
+                <button class="nav-button" data-page="reports">Reports</button>
+            </nav>
+
+            <button id="logoutButton" class="nav-button logout">Log out</button>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div>
+                    <span class="muted">LibReturn / </span>
+                    <strong id="pageName">Admin Dashboard</strong>
+                </div>
+                <div class="profile">
+                    <span class="avatar">LR</span> Lira Mae Aguilar
+                </div>
+            </header>
+            
+            <section id="pageContent"></section>
+        </main>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
